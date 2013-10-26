@@ -24,6 +24,19 @@ class UsersController extends AppController {
 		}
 	}
 
+/**
+ * beforeRender method
+ *
+ * @return void
+ * @access public
+ */
+	public function beforeRender() {
+		unset($this->request->data['User'][$this->Auth->fields['password']]);
+		unset($this->request->data['User']['confirm']);
+		unset($this->request->data['User']['current_password']);
+		return parent::beforeRender();
+	}
+
 	public function admin_delete($id = null) {
 		$this->User->id = $id;
 		if ($id && $this->User->exists()) {
