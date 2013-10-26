@@ -139,8 +139,6 @@ DROP TABLE IF EXISTS `institutions`;
 CREATE TABLE `institutions` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` varchar(255) default NULL,
-  `icon` varchar(255) default NULL,
-  `icon_label` varchar(255) default NULL,
   `created` datetime default NULL,
   `modified` datetime default NULL,
   PRIMARY KEY  (`id`)
@@ -196,7 +194,7 @@ CREATE TABLE `reports` (
   `name` varchar(255) default NULL COMMENT 'pequeña descripción',
   `gps` varchar(255) default NULL,
   `image` varchar(255) default NULL,
-  `institution_id` int(11) unsigned default NULL,
+  `reporttype_id` int(11) unsigned default NULL,
   `reconfirmed` int(11) unsigned default '1',
   `email` varchar(255) default NULL,
   `location_id` int(11) default NULL,
@@ -212,6 +210,31 @@ CREATE TABLE `reports` (
 LOCK TABLES `reports` WRITE;
 /*!40000 ALTER TABLE `reports` DISABLE KEYS */;
 /*!40000 ALTER TABLE `reports` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reporttypes`
+--
+
+DROP TABLE IF EXISTS `reporttypes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reporttypes` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `name` varchar(255) default NULL,
+  `icon` varchar(255) default NULL,
+  `institution_id` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reporttypes`
+--
+
+LOCK TABLES `reporttypes` WRITE;
+/*!40000 ALTER TABLE `reporttypes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reporttypes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -253,4 +276,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-26 17:18:00
+-- Dump completed on 2013-10-26 18:11:12
