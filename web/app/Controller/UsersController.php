@@ -14,7 +14,7 @@ class UsersController extends AppController {
 		$this->set('authFields', $this->Auth->fields);
 		$this->Auth->allow(
 			'login',
-			'logout',
+			'logout'
 			// 'admin_acl'
 		);
 
