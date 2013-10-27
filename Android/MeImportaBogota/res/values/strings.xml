@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Me importa Bogota</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="posicion">posicion</string>
+    <string name="activar">activar</string>
+    <string name="provider">provider</string>
+    <string name="desactivar">desactivar</string>
+
+</resources>
