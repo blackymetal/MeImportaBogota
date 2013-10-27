@@ -44,7 +44,12 @@
 
 function setSpotInfo(spot, photo, latitude, longitude){
   javascript:document.getElementById('spot_info').innerHTML= spot;
-  javascript:document.getElementById('spot_photo').innerHTML= photo;
+  var elem = document.createElement("img");
+  
+  elem.src = photo;
+  
+  javascript:document.getElementById('spot_photo').appendChild(elem);
+
   javascript:document.getElementById('spot_latitude').innerHTML= latitude;
   javascript:document.getElementById('spot_longitude').innerHTML= longitude;
 }
@@ -89,14 +94,13 @@ google.maps.event.addDomListener(window, 'load', initialize);
         Place here the spot info    
       </span>  
       <h3>Fotografía</h3>
-      <span id = "spot_photo">
-        Place here the spot photo    
-      </span>  
-      <h3>Latitude</h3>
+      <div id = "spot_photo">
+      </div>  
+      <h3>Latitud</h3>
       <span id = "spot_latitude">
         Selecciona un punto de tu interés
       </span>  
-      <h3>Longitude</h3>
+      <h3>Longitud</h3>
       <span id = "spot_longitude">
         Selecciona un punto de tu interés
       </span>  

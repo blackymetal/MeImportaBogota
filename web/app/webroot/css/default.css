@@ -24,6 +24,6 @@ span{
 }
 
 #spot_photo{
-	border: 2px solid red;	
-	width: 150px;
+	border: 1px solid #f5f5f5;	
+	max-width: 270px;
 }
