@@ -1,6 +1,7 @@
 <?php
 class ApiController extends AppController {
 	public $uses = array('Institution', 'Reporttype', 'Report', 'Location');
+	public $components = array('Latlng');
 	
 	public $helper = array('Html');
 	
@@ -99,12 +100,41 @@ class ApiController extends AppController {
 			'msg' => ''
 		);
 		
-		// print_r($this->request->data);
+		$data['Report']['location_id'] = null;
+		
+		// Busca todas las locations
+		$this->Location->recursive = -1;
+		$locations = $this->Location->find('all', array('conditions' => array('Location.caseclosed' => 0)));
+		
+		foreach($locations as $location) {
+			if($this->Latlng->checkCoverage($location['Location']['area'], $this->request->data['lat'], $this->request->data['lng'])) {
+				$data['Report']['location_id'] = $location['Location']['id'];
+				break;
+			}
+		}
 		
 		// Copia la imagen al directorio correspondiente
 		$data['Report']['reporttype_id'] = $this->request->data['reporttype_id'];
 		$data['Report']['lat'] = $this->request->data['lat'];
 		$data['Report']['lng'] = $this->request->data['lng'];
+		$data['Report']['gps'] = sprintf('%s,%s', $this->request->data['lat'], $this->request->data['lng']);
+		
+		if(!isset($data['Report']['location_id'])) {
+			$data_location['Location']['name'] = '';
+			list($latmin, $latmax, $lngmin, $lngmax) = $this->Latlng->getBoundingBox($this->request->data['lat'], $this->request->data['lng'], 0.015);
+			// Crea el box de location
+			$area = sprintf('%1$s,%4$s;%2$s,%4$s;%1$s,%3$s;%2$s,%3$s', $latmin, $latmax, $lngmin, $lngmax);
+			$data_location['Location']['area'] = $area;
+			$data_location['Location']['lat'] = $this->request->data['lat'];
+			$data_location['Location']['lng'] = $this->request->data['lng'];
+			$data_location['Location']['gps'] = sprintf('%s,%s', $this->request->data['lat'], $this->request->data['lng']);
+			
+			$this->Location->create();
+			$this->Location->save($data_location);
+			
+			$data['Report']['location_id'] = $this->Location->id;
+		}
+		
 		$archivo = rand();
 		file_put_contents(Configure::read('Images.fotos').$archivo, $this->request->data['image']);
 		
