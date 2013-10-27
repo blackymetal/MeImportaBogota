@@ -44,26 +44,13 @@ function setMarkers(map, locations) {
     
     console.log(i);
 
-    var city = locations[i];
+    var spot = locations[i];
     
-/*	
+    var myLatLng = new google.maps.LatLng(spot['Report']['lat'], spot['Report']['lng']);
 
-	for (var i = 0; i < json; i++) {
-	var latLng = new google.maps.LatLng(dataPhoto.latitude,
-	  dataPhoto.longitude);
-	var marker = new google.maps.Marker({
-	  position: latLng
-	});
-	
-	}
-
-	*/
-
-    var myLatLng = new google.maps.LatLng(city['Report']['lat'], city['Report']['lng']);
     var marker = new google.maps.Marker({
         position: myLatLng,
-        //map: map,
-        title: city['Report']['name'],
+        title: spot['Report']['name'],
         zIndex: i
     });
 
