@@ -142,7 +142,7 @@ CREATE TABLE `institutions` (
   `created` datetime default NULL,
   `modified` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +151,7 @@ CREATE TABLE `institutions` (
 
 LOCK TABLES `institutions` WRITE;
 /*!40000 ALTER TABLE `institutions` DISABLE KEYS */;
+INSERT INTO `institutions` VALUES (1,'IDU',NULL,NULL);
 /*!40000 ALTER TABLE `institutions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,8 +170,10 @@ CREATE TABLE `locations` (
   `gps` varchar(255) default NULL,
   `modified` datetime default NULL,
   `created` datetime default NULL,
+  `lat` double(15,12) default NULL,
+  `lng` double(15,12) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,6 +182,7 @@ CREATE TABLE `locations` (
 
 LOCK TABLES `locations` WRITE;
 /*!40000 ALTER TABLE `locations` DISABLE KEYS */;
+INSERT INTO `locations` VALUES (1,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,13 +198,15 @@ CREATE TABLE `reports` (
   `name` varchar(255) default NULL COMMENT 'pequeña descripción',
   `gps` varchar(255) default NULL,
   `image` varchar(255) default NULL,
+  `lat` double(15,12) default NULL,
+  `lng` double(15,12) default NULL,
   `reporttype_id` int(11) unsigned default NULL,
   `reconfirmed` int(11) unsigned default '1',
   `email` varchar(255) default NULL,
   `location_id` int(11) default NULL,
   `created` int(11) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,6 +215,7 @@ CREATE TABLE `reports` (
 
 LOCK TABLES `reports` WRITE;
 /*!40000 ALTER TABLE `reports` DISABLE KEYS */;
+INSERT INTO `reports` VALUES (1,'hueco','4.767406,-74.046949',NULL,4.767406000000,-74.046949000000,1,1,NULL,1,NULL),(2,'hueco2','4.767406000001,-74.046949000001',NULL,4.767406000001,-74.046949000001,1,1,NULL,1,NULL);
 /*!40000 ALTER TABLE `reports` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,7 +232,7 @@ CREATE TABLE `reporttypes` (
   `icon` varchar(255) default NULL,
   `institution_id` int(11) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,6 +241,7 @@ CREATE TABLE `reporttypes` (
 
 LOCK TABLES `reporttypes` WRITE;
 /*!40000 ALTER TABLE `reporttypes` DISABLE KEYS */;
+INSERT INTO `reporttypes` VALUES (1,'Hueco',NULL,1);
 /*!40000 ALTER TABLE `reporttypes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,6 +261,7 @@ CREATE TABLE `users` (
   `active` tinyint(1) default '1',
   `created` datetime default NULL,
   `modified` datetime default NULL,
+  `institution_id` int(11) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -263,7 +272,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Ariel','ariel@ficticio.com','43c4430524d4e16e28aeaf8c6eb9af5cb70a6fea',1,1,NULL,NULL);
+INSERT INTO `users` VALUES (1,'Ariel','ariel@ficticio.com','43c4430524d4e16e28aeaf8c6eb9af5cb70a6fea',1,1,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -276,4 +285,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-26 18:11:12
+-- Dump completed on 2013-10-26 20:14:29
