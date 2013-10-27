@@ -111,6 +111,10 @@ class ReportsController extends AppController {
 	 */
 	public function admin_list_json($reporttype_id = null, $bounds = null) {
 		$this->autoRender = false;
+		
+		App::uses('HtmlHelper', 'View/Helper');
+		$Html = new HtmlHelper(new View(null));
+		
 		header("Pragma: no-cache");
 		header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
 		header('Content-Type: application/json; charset=utf-8');
@@ -143,6 +147,11 @@ class ReportsController extends AppController {
 		
 		$this->Report->recursive = -1;
 		$reports = $this->Report->find('all', array('conditions' => $conditions));
+		
+		foreach($reports as $i => $report) {
+			$image = $Html->url('/img/fotos/'.$report['Report']['image'], true);
+			$reports[$i]['Report']['image'] = $image;
+		}
 		$json['data'] = $reports;
 		
 		echo json_encode($json);
