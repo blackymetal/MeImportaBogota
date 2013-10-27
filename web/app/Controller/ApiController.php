@@ -36,6 +36,9 @@ class ApiController extends AppController {
 		
 		// Captura la accion
 		switch($action) {
+			case 'list_reporttypes':
+				$this->listReporttypes();
+				break;
 			case 'nearby':
 				$this->nearby();
 				break;
@@ -47,6 +50,27 @@ class ApiController extends AppController {
 			echo json_encode($json);
 			exit();
 		}
+	}
+	
+	/**
+		* Devuelve todos los tipos de reporte
+		* @return print json
+		*/
+	private function listReporttypes() {
+		
+		$json = array(
+			'response' => true,
+			'data' => '',
+			'msg' => ''
+		);
+		
+		$this->Reporttype->recursive = -1;
+		$report_types = $this->Reporttype->find('all');
+		
+		$json['data'] = $report_types;
+		
+		echo json_encode($json);
+		exit();
 	}
 	
 	/**
@@ -65,6 +89,7 @@ class ApiController extends AppController {
 		);
 		
 		$this->Report->unbindModel(array('belongsTo' => array('Reporttype')));
+		// Busca los reportes que se encuentren a una distancia máxima de 15 metros teniendo en cuenta la latitud y longitud del usuario
 		// SELECT * FROM reports WHERE acos(sin(4.767406) * sin(lat) + cos(4.767406) * cos(lat) * cos(lng - (-74.046949))) * 6371 <= 0.015;
 		$reports = $this->Report->find('all', array(
 			'conditions' => array(
