@@ -107,3 +107,9 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+Configure::write(
+	'Images', array(
+		'fotos' => ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'fotos'.DS
+	)
+);
