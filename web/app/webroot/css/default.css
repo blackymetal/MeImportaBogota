@@ -1,5 +1,5 @@
 h1{
-	background-color: #f5f5f5;
+	border-bottom: 4px solid #008cff;	
 	font-size: 15px;
 	padding: 3px;
 }
@@ -10,7 +10,7 @@ h3{
 }
 
 span{
-	font-size: 10px;
+	font-size: 11px;
 }
 
 .white-box{
