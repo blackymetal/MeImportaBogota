@@ -17,51 +17,60 @@
   var mapOptions = {
     zoom: 10,
     center: new google.maps.LatLng(4.509345, -74.058838),
-    //center: new google.maps.LatLng(-33.9, 151.2),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }
   
   map = new google.maps.Map(document.getElementById('map-canvas'),
                                 mapOptions);
 
-  setMarkers(map, cities);
-}
+  
 
-var cities = [];
+}
 
 $.ajax({
     url: url_reports
 }).done(function(json) {
     if(json.response) {
-        
+			        
         setMarkers(map,json.data);
     }
 });
 
 function setMarkers(map, locations) {
 
-  var shape = {
-      coord: [1, 1, 1, 20, 18, 20, 18 , 1],
-      type: 'poly'
-  };
-
-  
+  var markers = [];
 
   for (var i = 0; i < locations.length; i++) {
     
     console.log(i);
 
     var city = locations[i];
+    
+/*	
+
+	for (var i = 0; i < json; i++) {
+	var latLng = new google.maps.LatLng(dataPhoto.latitude,
+	  dataPhoto.longitude);
+	var marker = new google.maps.Marker({
+	  position: latLng
+	});
+	
+	}
+
+	*/
 
     var myLatLng = new google.maps.LatLng(city['Report']['lat'], city['Report']['lng']);
     var marker = new google.maps.Marker({
         position: myLatLng,
-        map: map,
-        shape: shape,
+        //map: map,
         title: city['Report']['name'],
         zIndex: i
     });
+
+    markers.push(marker);
+
   }
+  var markerCluster = new MarkerClusterer(map, markers);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

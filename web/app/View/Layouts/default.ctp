@@ -34,7 +34,8 @@
 
 		print $this->fetch('meta');
 		print $this->fetch('css');
-		print $this->Html->script(array('jquery-1.7.2.min.js', 'bootstrap.js'), array('inline' => false));
+		print $this->Html->script(array('jquery-1.7.2.min.js', 'bootstrap.js', 'markerclusterer.js'), array('inline' => false));
+
 		print $this->fetch('script');
 	?>
 	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
