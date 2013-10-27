@@ -31,6 +31,7 @@ var beaches = [];
 beaches.push([json['data'][0]['Report']['name'], json['data'][0]['Report']['lat'], json['data'][0]['Report']['lng'], 5]);
 beaches.push([json['data'][1]['Report']['name'], -34.028249, 151.157507, 3]);
 beaches.push([json['data'][2]['Report']['name'], -33.890542, 151.274856, 4]);
+
 beaches.push(['Manly Beach', -33.80010128657071, 151.28747820854187, 2]);
 beaches.push(['Maroubra Beach', -33.950198, 151.259302, 1]);
 
