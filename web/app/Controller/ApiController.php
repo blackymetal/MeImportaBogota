@@ -4,6 +4,13 @@ class ApiController extends AppController {
 	
 	public $helper = array('Html');
 	
+	public $mime_types = array(
+		'image/jpeg' => 'jpg',
+		'image/jpg' => 'jpg',
+		'image/gif' => 'gif',
+		'image/png' => 'png'
+	);
+	
 	public function beforeFilter() {
 		parent::beforeFilter();
 		// Autoriza el acceso al método registro sin necesidad de estar registrado
@@ -36,8 +43,14 @@ class ApiController extends AppController {
 		
 		// Captura la accion
 		switch($action) {
+			case 'list_reporttypes':
+				$this->listReporttypes();
+				break;
 			case 'nearby':
 				$this->nearby();
+				break;
+			case 'add_report':
+				$this->addReport();
 				break;
 			default:
 			$json = array(
@@ -50,7 +63,88 @@ class ApiController extends AppController {
 	}
 	
 	/**
-		* Devuelve todos los reportes que se encuentren cerca del punto gps
+		* Devuelve todos los tipos de reporte, method GET
+		* @return print json
+		*/
+	private function listReporttypes() {
+		
+		$json = array(
+			'response' => true,
+			'data' => '',
+			'msg' => ''
+		);
+		
+		$this->Reporttype->recursive = -1;
+		$report_types = $this->Reporttype->find('all');
+		
+		$json['data'] = $report_types;
+		
+		echo json_encode($json);
+		exit();
+	}
+	
+	/**
+		* Adiciona reporte de un usuario, method POST
+		* @param string $this->request->data['reporttype_id'] tipo de reporte
+		* @param string $this->request->data['lat'] latitude
+		* @param string $this->request->data['lng'] longitude
+		* @param string $this->request->data['image'] foto
+		* @return print json
+		*/
+	private function addReport() {
+		
+		$json = array(
+			'response' => true,
+			'data' => '',
+			'msg' => ''
+		);
+		
+		// print_r($this->request->data);
+		
+		// Copia la imagen al directorio correspondiente
+		$data['Report']['reporttype_id'] = $this->request->data['reporttype_id'];
+		$data['Report']['lat'] = $this->request->data['lat'];
+		$data['Report']['lng'] = $this->request->data['lng'];
+		$archivo = rand();
+		file_put_contents(Configure::read('Images.fotos').$archivo, $this->request->data['image']);
+		
+		$finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+		
+		if (!$finfo) {
+			echo "Opening fileinfo database failed";
+			exit();
+		}
+		
+		$mime = finfo_file($finfo, Configure::read('Images.fotos').$archivo);
+		
+		copy(Configure::read('Images.fotos').$archivo, Configure::read('Images.fotos').$archivo.'.'.$this->mime_types[$mime]);
+		chmod(Configure::read('Images.fotos').$archivo.'.'.$this->mime_types[$mime], 0777);
+		chmod(Configure::read('Images.fotos').$archivo, 0777);
+		unlink(Configure::read('Images.fotos').$archivo);
+		
+		/* close connection */
+		finfo_close($finfo);
+		
+		// Guarda el nombre de la imagen en la Base de datos
+		$data['Report']['image'] = $archivo.'.'.$this->mime_types[$mime];
+		
+		$this->Report->create();
+		if($this->Report->save($data)) {
+			$data['Report']['id'] = $this->Report->id;
+			$json['data'] = $data;
+		} else {
+			$json['response'] = false;
+			$json['msg'] = __('Hubo un error al intentar guardar el reporte.');
+		}
+		
+		// $json['data'] = $report_types;
+		
+		echo json_encode($json);
+		exit();
+	}
+	
+	/**
+		* Devuelve todos los reportes que se encuentren cerca del punto gps, method GET
 		* @param string $this->request->query['reporttype_id'] tipo de reporte
 		* @param string $this->request->query['lat'] latitude
 		* @param string $this->request->query['lng'] longitude
@@ -65,6 +159,7 @@ class ApiController extends AppController {
 		);
 		
 		$this->Report->unbindModel(array('belongsTo' => array('Reporttype')));
+		// Busca los reportes que se encuentren a una distancia máxima de 15 metros teniendo en cuenta la latitud y longitud del usuario
 		// SELECT * FROM reports WHERE acos(sin(4.767406) * sin(lat) + cos(4.767406) * cos(lat) * cos(lng - (-74.046949))) * 6371 <= 0.015;
 		$reports = $this->Report->find('all', array(
 			'conditions' => array(
@@ -80,7 +175,7 @@ class ApiController extends AppController {
 	}
 	
 	/**
-		* Verifica la firma
+		* Verifica la firma, method GET
 		* @param string $action, los demás parámetros llegan post/get timestamp y sign
 		* @return json
 		*/
