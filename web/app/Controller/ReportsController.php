@@ -99,4 +99,37 @@ class ReportsController extends AppController {
 		$this->Session->setFlash(__('Report was not deleted'));
 		return $this->redirect(array('action' => 'index'));
 	}
+	
+	
+	/**
+	 * admin_list_json method
+	 *
+	 * Devuelve la lista de reportes
+	 *
+	 * @param int $reporttype_id, opcional si llega el parámetro se filtra
+	 * @return json
+	 */
+	public function admin_list_json($reporttype_id = null) {
+		$this->autoRender = false;
+		header("Pragma: no-cache");
+		header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
+		header('Content-Type: application/json; charset=utf-8');
+		
+		$json = array(
+			'response' => true,
+			'data' => '',
+			'msg' => ''
+		);
+		$conditions = array();
+		if(isset($reporttype_id)) {
+			$conditions[] = array('Report.reporttype_id' => $reporttype_id);
+		}
+		
+		$this->Report->recursive = -1;
+		$reports = $this->Report->find('all');
+		$json['data'] = $reports;
+		
+		echo json_encode($json);
+		exit();
+	}
 }
