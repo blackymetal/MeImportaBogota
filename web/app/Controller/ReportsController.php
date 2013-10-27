@@ -126,7 +126,7 @@ class ReportsController extends AppController {
 		}
 		
 		$this->Report->recursive = -1;
-		$reports = $this->Report->find('all');
+		$reports = $this->Report->find('all', array('conditions' => $conditions));
 		$json['data'] = $reports;
 		
 		echo json_encode($json);
