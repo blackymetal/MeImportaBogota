@@ -104,7 +104,10 @@ class ApiController extends AppController {
 		
 		// Busca todas las locations
 		$this->Location->recursive = -1;
-		$locations = $this->Location->find('all', array('conditions' => array('Location.caseclosed' => 0)));
+		$locations = $this->Location->find('all', array('conditions' => array(
+			'Location.caseclosed' => 0,
+			'Location.reporttype_id' => $this->request->data['reporttype_id']
+		)));
 		
 		foreach($locations as $location) {
 			if($this->Latlng->checkCoverage($location['Location']['area'], $this->request->data['lat'], $this->request->data['lng'])) {
@@ -128,6 +131,7 @@ class ApiController extends AppController {
 			$data_location['Location']['lat'] = $this->request->data['lat'];
 			$data_location['Location']['lng'] = $this->request->data['lng'];
 			$data_location['Location']['gps'] = sprintf('%s,%s', $this->request->data['lat'], $this->request->data['lng']);
+			$data_location['Location']['reporttype_id'] = $this->request->data['reporttype_id'];
 			
 			$this->Location->create();
 			$this->Location->save($data_location);
