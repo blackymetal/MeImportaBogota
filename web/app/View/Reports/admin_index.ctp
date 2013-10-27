@@ -12,7 +12,7 @@
   var map = new google.maps.Map(document.getElementById('map-canvas'),
                                 mapOptions);
 
-  setMarkers(map, beaches);
+  setMarkers(map, cities);
 }
 
 /**
@@ -22,18 +22,20 @@
  */
 
 var json = {"response":true,"data":[
-			{"Report":{"id":"1","name":"hueco","gps":"4.767406,-74.046949","image":null,"lat":"4.767406000000","lng":"-74.046949000000","reporttype_id":"1","reconfirmed":"1","email":null,"location_id":"1","created":null}},
-			{"Report":{"id":"1","name":"hueco2","gps":"4.767406,-74.046949","image":null,"lat":"4.767406000000","lng":"-74.046949000000","reporttype_id":"1","reconfirmed":"1","email":null,"location_id":"1","created":null}},
-			{"Report":{"id":"2","name":"hueco3","gps":"4.767406000001,-74.046949000001","image":null,"lat":"4.767406000001","lng":"-74.046949000001","reporttype_id":"1","reconfirmed":"1","email":null,"location_id":"1","created":null}}],"msg":""};
+			{"Report":{"id":"1","name":"hueco","gps":"4.767406,-74.046949","image":null,"lat":"-33.890542","lng":"151.274856","reporttype_id":"1","reconfirmed":"1","email":null,"location_id":"1","created":null}},
+			{"Report":{"id":"1","name":"hueco2","gps":"4.767406,-74.046949","image":null,"lat":"-33.923036","lng":"151.259052","reporttype_id":"1","reconfirmed":"1","email":null,"location_id":"1","created":null}},
+			{"Report":{"id":"1","name":"hueco3","gps":"4.767406,-74.046949","image":null,"lat":"-34.028249","lng":"151.157507","reporttype_id":"1","reconfirmed":"1","email":null,"location_id":"1","created":null}},
+			{"Report":{"id":"1","name":"hueco4","gps":"4.767406,-74.046949","image":null,"lat":"-33.950198","lng":"151.259302","reporttype_id":"1","reconfirmed":"1","email":null,"location_id":"1","created":null}},
+			{"Report":{"id":"2","name":"hueco5","gps":"-33.950198,151.259302","image":null,"lat":"-33.80010128657071","lng":"151.28747820854187","reporttype_id":"1","reconfirmed":"1","email":null,"location_id":"1","created":null}}],"msg":""};
 
-var beaches = [];
 
-beaches.push([json['data'][0]['Report']['name'], json['data'][0]['Report']['lat'], json['data'][0]['Report']['lng'], 5]);
-beaches.push([json['data'][1]['Report']['name'], -34.028249, 151.157507, 3]);
-beaches.push([json['data'][2]['Report']['name'], -33.890542, 151.274856, 4]);
+var cities = [];
 
-beaches.push(['Manly Beach', -33.80010128657071, 151.28747820854187, 2]);
-beaches.push(['Maroubra Beach', -33.950198, 151.259302, 1]);
+for (var i = 0; i < json['data'].length; i++) {
+	    
+	    cities.push([json['data'][i]['Report']['name'], json['data'][i]['Report']['lat'], json['data'][i]['Report']['lng'], i]);
+	}
+
 
 function setMarkers(map, locations) {
   // Add markers to the map
@@ -45,15 +47,7 @@ function setMarkers(map, locations) {
   // Origins, anchor positions and coordinates of the marker
   // increase in the X direction to the right and in
   // the Y direction down.
-  var image = {
-    url: 'images/beachflag.png',
-    // This marker is 20 pixels wide by 32 pixels tall.
-    size: new google.maps.Size(20, 32),
-    // The origin for this image is 0,0.
-    origin: new google.maps.Point(0,0),
-    // The anchor for this image is the base of the flagpole at 0,32.
-    anchor: new google.maps.Point(0, 32)
-  };
+  
   // Shapes define the clickable region of the icon.
   // The type defines an HTML &lt;area&gt; element 'poly' which
   // traces out a polygon as a series of X,Y points. The final
