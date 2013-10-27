@@ -59,4 +59,6 @@ Instrucciones instalación Android
 	
 	Instalacion App
 	
-	-
+	-pasar al celular el archivo "MeImportaBogota.apk" que se encuentra en la ruta "C:\wamp\www\MeImportaBogota\Android\Ejecutable APK\"
+	-abrir desde el celular el archivo "MeImportaBogota.apk"
+	-ir al menu de aplicaciones, buscar la aplicacion con el nombre "Me importa Bogota" y ejecutar
