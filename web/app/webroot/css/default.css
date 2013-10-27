@@ -6,14 +6,24 @@ h1{
 
 h3{
 	font-size: 12px;
-	padding: 3px;	
+	margin: 2px 2px 0px 2px;	
+}
+
+span{
+	font-size: 10px;
 }
 
 .white-box{
 	margin: 0 auto;
 }
+
 #map-canvas { height: 700px; width: 1000px; }
 
 #map-canvas img {
 	max-width: none;
+}
+
+#spot_photo{
+	border: 2px solid red;	
+	width: 150px;
 }
