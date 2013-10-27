@@ -31,7 +31,7 @@ CREATE TABLE `acos` (
   `lft` int(10) default NULL,
   `rght` int(10) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `acos` (
 
 LOCK TABLES `acos` WRITE;
 /*!40000 ALTER TABLE `acos` DISABLE KEYS */;
-INSERT INTO `acos` VALUES (1,NULL,NULL,NULL,'controllers',1,22),(2,1,NULL,NULL,'Users',2,11),(18,1,NULL,NULL,'Reports',12,21),(19,18,NULL,NULL,'admin_index',13,14),(20,18,NULL,NULL,'admin_add',15,16),(21,18,NULL,NULL,'admin_edit',17,18),(22,18,NULL,NULL,'admin_delete',19,20),(23,2,NULL,NULL,'admin_index',3,4),(24,2,NULL,NULL,'admin_add',5,6),(25,2,NULL,NULL,'admin_edit',7,8),(26,2,NULL,NULL,'admin_delete',9,10);
+INSERT INTO `acos` VALUES (1,NULL,NULL,NULL,'controllers',1,24),(2,1,NULL,NULL,'Users',2,11),(18,1,NULL,NULL,'Reports',12,23),(19,18,NULL,NULL,'admin_index',13,14),(20,18,NULL,NULL,'admin_add',15,16),(21,18,NULL,NULL,'admin_edit',17,18),(22,18,NULL,NULL,'admin_delete',19,20),(23,2,NULL,NULL,'admin_index',3,4),(24,2,NULL,NULL,'admin_add',5,6),(25,2,NULL,NULL,'admin_edit',7,8),(26,2,NULL,NULL,'admin_delete',9,10),(27,18,NULL,NULL,'admin_list',21,22);
 /*!40000 ALTER TABLE `acos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +206,7 @@ CREATE TABLE `reports` (
   `location_id` int(11) default NULL,
   `created` int(11) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +215,7 @@ CREATE TABLE `reports` (
 
 LOCK TABLES `reports` WRITE;
 /*!40000 ALTER TABLE `reports` DISABLE KEYS */;
-INSERT INTO `reports` VALUES (1,'hueco','4.767406,-74.046949',NULL,4.767406000000,-74.046949000000,1,1,NULL,1,NULL),(2,'hueco2','4.767406000001,-74.046949000001',NULL,4.767406000001,-74.046949000001,1,1,NULL,1,NULL);
+INSERT INTO `reports` VALUES (1,'hueco','4.767406,-74.046949',NULL,4.767406000000,-74.046949000000,1,1,NULL,1,NULL),(2,'hueco2','4.767406000001,-74.046949000001',NULL,4.767406000001,-74.046949000001,1,1,NULL,1,NULL),(3,NULL,NULL,'682720663.jpg',4.767406000000,-74.046949000000,1,1,NULL,NULL,1382846760);
 /*!40000 ALTER TABLE `reports` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,4 +285,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-26 20:14:29
+-- Dump completed on 2013-10-26 23:29:59

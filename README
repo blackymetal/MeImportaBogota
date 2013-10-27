@@ -1,3 +1,48 @@
-Instrucciones:
+Instrucciones instalación web:
 
-	- Acá la primer instrucción
+	Requerimientos mínimos Backend (web)
+	
+		- PHP 5.3.26 con GD
+		- Apache/2.2.24 con mod_write habilitado
+		- MySQL 5.0.96
+	
+	Instalación BD
+	
+		- Crear base de datos con el nombre meimportabogota:
+		
+			CREATE DATABASE meimportabogota DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+		
+		- Ubicar el archivo MeImportaBogota/meimportabogota.sql en el repositorio
+		
+			Ejecutar desde consola;
+		
+			mysql -u mi_super_usuario -p mi_super_password meimportabogota < MeImportaBogota/meimportabogota.sql
+		
+		- Ubicar en el repositorio MeImportaBogota/web/app/config/database.php.default hacer una copia y renombrarlo database.php
+		
+		- Editar MeImportaBogota/web/app/config/database.php y actualizar host, login, password, database y encoding
+		
+			public $default = array(
+				'datasource' => 'Database/Mysql',
+				'persistent' => false,
+				'host' => '127.0.0.1', // <- adaptar al entorno local 127.0.0.1, localhost o la IP de la máquina
+				'login' => 'mi_super_usuario', // <- login para acceder a mysql
+				'password' => 'mi_super_password', // <- password para acceder  a mysql
+				'database' => 'meimportabogota', // <- en teoria es meimportabogota pero si es diferente cambiarlo
+				'prefix' => '',
+				'encoding' => 'utf8', // <- a esta línea se le quitó el comentario
+			);
+			
+	Verificar permisos
+	
+		- Darle permisos de lectura y escritura a los directorios
+			
+			MeImportaBogota/web/app/tmp/
+			
+			y
+			
+			MeImportaBogota/web/app/webroot/img/fotos/
+
+Instrucciones instalación Android
+	
+	TODO
