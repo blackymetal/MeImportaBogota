@@ -1,54 +1,32 @@
-<div class="reports index">
-	<h2><?php echo __('Reports'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('gps'); ?></th>
-			<th><?php echo $this->Paginator->sort('image'); ?></th>
-			<th><?php echo $this->Paginator->sort('institution_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('reconfirmed'); ?></th>
-			<th><?php echo $this->Paginator->sort('email'); ?></th>
-			<th><?php echo $this->Paginator->sort('location_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('created'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($reports as $report): ?>
-	<tr>
-		<td><?php echo h($report['Report']['id']); ?>&nbsp;</td>
-		<td><?php echo h($report['Report']['name']); ?>&nbsp;</td>
-		<td><?php echo h($report['Report']['gps']); ?>&nbsp;</td>
-		<td><?php echo h($report['Report']['image']); ?>&nbsp;</td>
-		<td><?php echo h($report['Report']['institution_id']); ?>&nbsp;</td>
-		<td><?php echo h($report['Report']['reconfirmed']); ?>&nbsp;</td>
-		<td><?php echo h($report['Report']['email']); ?>&nbsp;</td>
-		<td><?php echo h($report['Report']['location_id']); ?>&nbsp;</td>
-		<td><?php echo h($report['Report']['created']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $report['Report']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $report['Report']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $report['Report']['id']), null, __('Are you sure you want to delete # %s?', $report['Report']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Report'), array('action' => 'add')); ?></li>
-	</ul>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&language=ja">
+</script>
+
+<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH_sQwtYfFSRtBaU10Q0aN4jV7Z3GZ7rc&sensor=true">
+    </script>
+<script type="text/javascript">
+  function initialize() {
+    var mapOptions = {
+      center: new google.maps.LatLng(4.598, -74.076),
+      zoom: 10,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map-canvas"),
+        mapOptions);
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+      <h1>Área</h1>
+      <h1>Punto de interés</h1>
+      <h3>Dirección</h3>
+      <h3>Fotografía</h3>
+    </div>
+    <div class="span10">
+      <div id="map-canvas"/>
+    </div>
+  </div>
 </div>
