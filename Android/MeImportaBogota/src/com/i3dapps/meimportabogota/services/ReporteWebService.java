@@ -1,6 +1,11 @@
 package com.i3dapps.meimportabogota.services;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -18,7 +23,7 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class ReporteWebService extends AsyncTask<String, Void, Boolean> {
+public class ReporteWebService extends AsyncTask<String, Void, String> {
 	
 	private HttpClient client;
 	private HttpPost post;
@@ -27,24 +32,45 @@ public class ReporteWebService extends AsyncTask<String, Void, Boolean> {
 	private List<NameValuePair> values;
 
 	@Override
-	protected Boolean doInBackground(String... arg0){
+	protected String doInBackground(String... arg0){
 
 		String jsonR = "";
-		int code = -1;
-		values = new ArrayList<NameValuePair>(5);
+		String code = "false";
+		values = new ArrayList<NameValuePair>(7);
 
-		if (arg0[0].equals("ADD_REPORT")) {
+		if (arg0[0].equals("add_report")) {
 			
-			values.add(new BasicNameValuePair("reportType_id", arg0[1]));
+			String action = arg0[0];
+			String private_key = "meimportabogota20131026";
+			Date fecha = new Date();
+			Timestamp timestamp = new Timestamp(fecha.getTime());	
+			timestamp.getTime();
+			String sign = private_key+"~"+action+"~"+timestamp;
+			MessageDigest mdEnc;
+			String signMD5="no funciono";
+			
+			try {
+				mdEnc = MessageDigest.getInstance("MD5");
+				mdEnc.update(sign.getBytes(), 0, sign.length());
+				signMD5 = new BigInteger(1, mdEnc.digest()).toString(16);
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
+			
+			values.add(new BasicNameValuePair("reporttype_id", arg0[1]));
 			values.add(new BasicNameValuePair("lat", arg0[2]));
 			values.add(new BasicNameValuePair("lng", arg0[3]));
 			values.add(new BasicNameValuePair("image", arg0[4]));
 			values.add(new BasicNameValuePair("name", arg0[5]));
+			values.add(new BasicNameValuePair("sign", signMD5));
+			values.add(new BasicNameValuePair("timestamp", String.valueOf(timestamp.getTime())));
 
 			try {
 
 				client = new DefaultHttpClient();
-				post = new HttpPost("meimportabogota/web/crearRegistro");
+				post = new HttpPost("http://127.0.0.1/MeiImportaBogota/web/api/execute/add_report");
 				post.setHeader("Accept", "application/json");
 				post.setEntity(new UrlEncodedFormEntity(values));
 				
@@ -55,26 +81,23 @@ public class ReporteWebService extends AsyncTask<String, Void, Boolean> {
 				Log.i("response CREAR USUARIO  : ", jsonR);
 
 				JSONObject jsonObject = new JSONObject(jsonR);
-				code = jsonObject.getInt("code");
+				code = jsonObject.getString("response");
 
-				if (code == 1)
-					return true;
+				if (code.equals("true"))
+					return "true";
 				else
-					return false;
+					return "false";
 
 			} catch (Exception error) {
-				return false;
+				return "false";
 			}
 		} else if (arg0[0].equals("GET_REPORT_TYPE")){
-			return false;
+			return "false";
 		} else {
-			return false;
+			return "false";
 		}
 
 	}
 
-	@Override
-	protected void onPostExecute(Boolean result){
-	}
 
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    <Button android:id="@+id/BotonActivar"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:text="@string/registrar" />
+ 
+    <TextView android:id="@+id/textPosicionActual"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_margin="15dip"
+       android:text="@string/posicion" />
+
+    <TextView
+        android:id="@+id/latitud"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dip" />
+
+    <TextView
+        android:id="@+id/longitud"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dip" />
+ 
+    <TextView android:id="@+id/textProveedor"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_margin="15dip"
+       android:text="@string/provider" />
+ 
+    <TextView android:id="@+id/proveedor"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_margin="15dip"/>
+
+    <!-- To display picture taken -->
+
+    
+    
+    <LinearLayout
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="10dp" >
+        
+        <ImageView
+        android:id="@+id/imgPreview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" 
+        android:contentDescription="@string/imagenCamara"/>
+        
+    </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/expandableListView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ExpandableListView>
+ 
+</LinearLayout>
+
