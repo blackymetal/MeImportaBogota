@@ -109,7 +109,7 @@ class ReportsController extends AppController {
 	 * @param int $reporttype_id, opcional si llega el parámetro se filtra
 	 * @return json
 	 */
-	public function admin_list_json($reporttype_id = null) {
+	public function admin_list_json($reporttype_id = null, $bounds = null) {
 		$this->autoRender = false;
 		header("Pragma: no-cache");
 		header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
@@ -120,7 +120,23 @@ class ReportsController extends AppController {
 			'data' => '',
 			'msg' => ''
 		);
+		
+		if(!is_numeric($reporttype_id)) {
+			$reporttype_id = null;
+		}
+		
 		$conditions = array();
+		
+		if(isset($bounds)) {
+			list($latmin, $lngmin, $latmax, $lngmax) = explode(',', $bounds);
+			
+			$conditions[] = array(
+				sprintf('Report.lat >= %s AND Report.lat <= %s', $latmin, $latmax),
+				sprintf('Report.lng >= %s AND Report.lng <= %s', $lngmin, $lngmax)
+			);
+			// (Lat => 1.2393 AND Lat <= 1.5532) AND (Lon >= -1.8184 AND Lon <= 0.4221)
+		}
+		
 		if(isset($reporttype_id)) {
 			$conditions[] = array('Report.reporttype_id' => $reporttype_id);
 		}
