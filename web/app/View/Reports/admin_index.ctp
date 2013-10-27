@@ -12,7 +12,8 @@
 <script type="text/javascript">
 	
 	var map;
-	
+	var elem = document.createElement("img");
+
 	function initialize() {
 		var mapOptions = {
 			zoom: 10,
@@ -43,11 +44,10 @@
 	}
 
 function setSpotInfo(spot, photo, latitude, longitude){
+  
   javascript:document.getElementById('spot_info').innerHTML= spot;
-  var elem = document.createElement("img");
   
   elem.src = photo;
-  
   javascript:document.getElementById('spot_photo').appendChild(elem);
 
   javascript:document.getElementById('spot_latitude').innerHTML= latitude;
@@ -61,23 +61,40 @@ function setMarkers(map, locations) {
 		
 		var spot = locations[i];
 		
-		var myLatLng = new google.maps.LatLng(spot['Report']['lat'], spot['Report']['lng']);
+    var latitude = spot['Report']['lat'];
+    var longitude = spot['Report']['lng'];
+    var name = spot['Report']['name'];
+    var image = spot['Report']['image'];
+
+		var myLatLng = new google.maps.LatLng(latitude, longitude);
     
     var marker = new google.maps.Marker({
 			position: myLatLng,
-			title: spot['Report']['name'],
-      photo: spot['Report']['lat'],
+			title: name,
+      photo: image,
 			zIndex: i
 		});
-		
-    google.maps.event.addListener(marker, 'click', function() {
-      setSpotInfo(marker.title,spot['Report']['image'],spot['Report']['lat'],spot['Report']['lng']);
-      console.log(spot);
-    });
 
     markers.push(marker);
+
+    changeSpot(marker, i);
+   
 	}
-	var markerCluster = new MarkerClusterer(map, markers);
+
+  function changeSpot(marker, num) {
+    google.maps.event.addListener(marker, 'click', function() {
+      //infowindow.open(marker.get('map'), marker);
+      setSpotInfo(marker.title,marker.photo,marker.position.lb,marker.position.mb);
+      console.log(marker.position.mb);
+    });
+  }
+	
+  
+
+  var markerCluster = new MarkerClusterer(map, markers);
+
+  
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -87,11 +104,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span2">
-      <h1>Área</h1>
+      <!--<h1>Área</h1>-->
       <h1>Punto de interés</h1>
       <h3>Descripción</h3>
       <span id = "spot_info">
-        Place here the spot info    
+        Selecciona un punto de tu interés    
       </span>  
       <h3>Fotografía</h3>
       <div id = "spot_photo">
