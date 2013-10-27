@@ -8,5 +8,9 @@ h3{
 	font-size: 12px;
 	padding: 3px;	
 }
+
+.white-box{
+	margin: 0 auto;
+}
 #map-canvas { height: 700px; width: 1000px; }
 
