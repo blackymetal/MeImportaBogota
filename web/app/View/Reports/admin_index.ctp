@@ -26,13 +26,12 @@
   
 
 }
-
+          
 $.ajax({
     url: url_reports
 }).done(function(json) {
     if(json.response) {
-			        
-        setMarkers(map,json.data);
+			  setMarkers(map,json.data);
     }
 });
 
