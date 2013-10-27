@@ -127,12 +127,12 @@ public class Launch extends Activity implements LocationListener {
 	    
 	    //CAMERA////////////////////////////////////////////////
 	    
-		new ReporteWebService().execute("ADD_REPORT",
+		/*new ReporteWebService().execute("ADD_REPORT",
 										"1",
 										latitud.getText().toString(), 
 										longitud.getText().toString(),
-										"imagen",
-										"COMENTARIOS VARIOS");
+										imgPreview.toString(),
+										"COMENTARIOS VARIOS");*/
 							
 		// Se desactivan las notificaciones
 		handle.removeUpdates(this);

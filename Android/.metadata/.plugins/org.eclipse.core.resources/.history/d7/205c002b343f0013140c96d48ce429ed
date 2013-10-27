@@ -91,7 +91,6 @@ public class ReporteWebService extends AsyncTask<String, Void, String> {
 					return "false";
 
 			} catch (Exception error) {
-				Log.DEBUG("error",error);
 				return "false";
 			}
 		} else if (arg0[0].equals("GET_REPORT_TYPE")){
